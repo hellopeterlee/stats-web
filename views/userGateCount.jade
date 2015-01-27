@@ -1,0 +1,23 @@
+doctype html
+html
+    include inc/header
+    script(src='/javascripts/My97DatePicker/WdatePicker.js')
+    link(rel='stylesheet', href='/javascripts/My97DatePicker/skin/WdatePicker.css')
+    script(src='/javascripts/FusionCharts/FusionCharts.js')
+    script(src='/javascripts/commons.js')
+    script(type='text/javascript').
+        var chartData = !{chartData};
+        $(function(){
+            renderChartEx("Column2D","chartContainer",chartData,"100%",500);
+        });
+    body
+        .navbar.navbar-default.navbar-static-top(role='navigation')
+            include inc/menubar
+        div.container
+            h1= title
+            br
+
+            h3 图表
+            .chartContainer#chartContainer
+
+    include inc/footer

@@ -1,0 +1,67 @@
+doctype html
+html
+    include inc/header
+    script(src='/javascripts/My97DatePicker/WdatePicker.js')
+    link(rel='stylesheet', href='/javascripts/My97DatePicker/skin/WdatePicker.css')
+    script(src='/javascripts/FusionCharts/FusionCharts.js')
+    script(src='/javascripts/web/register.js')
+    script(type='text/javascript').
+        var chartData = !{results.chartData};
+
+    body
+    .navbar.navbar-default.navbar-static-top(role='navigation')
+        include inc/menubar
+    div.container
+        h1= title
+        br
+        form.form-inline(role='form' action='/register')
+            .form-group
+                label.sr-only 选择服务器:
+                p.form-control-static 选择服务器:&nbsp&nbsp&nbsp&nbsp
+            .form-group
+                select#inputdiamond.form-control(type="text",name='serverId')
+                    option(type="text",value='serverId' name='serverId',selected='selected') 全部
+                    - for(var j = 0; j < results.comPort.length; j++)
+                        option(type="text",value="#{j+1}",name='goodsname') #{results.comPort[j].name}
+            br
+            .form-group
+                label.sr-only 选择日期
+                p.form-control-static 选择日期:&nbsp&nbsp&nbsp&nbsp
+            .form-group
+                input.Wdate(type="text" id="d243" name='startDate' onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})")
+            br
+
+            .form-group
+                label.sr-only 选择日期
+                p.form-control-static 截止日期:&nbsp&nbsp&nbsp&nbsp
+            .form-group
+                input.Wdate(type="text" id="d243" name='endDate' onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})")
+            &nbsp&nbsp&nbsp&nbsp
+            button.btn.btn-default(type='submit') 提交
+        br
+        h3 注册统计
+            .chartContainer#chartContainer
+        h3 注册时段统计
+            .chartContainer#chartContainer
+
+        br
+
+        - console.log(results);
+        table.table.table-hover
+            tr
+                td 注册日期
+                td 注册人数
+                td 注册独立ip数
+            - for(var i = 0; i < results.resultsHour.length; i++)
+                tr
+                    - var date = results.resultsHour[i]['date']
+                    - var years = date.getFullYear().toString();
+                    - var months = (date.getMonth() + 1).toString();
+                    - var days = date.getDate().toString();
+                    - var hour = date.getHours().toString();
+                    - var time = years + "-" + months + "-" + days + " " + hour;
+                    td= time
+                    td= results.resultsHour[i]['count']
+                    td= results.resultsHour[i]['ipCount']
+
+    include inc/footer

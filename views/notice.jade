@@ -1,0 +1,54 @@
+doctype html
+html
+    include inc/header
+    link(rel='stylesheet', href='/javascripts/My97DatePicker/skin/WdatePicker.css')
+    script(src='/javascripts/web/notice-input.js')
+
+    body
+    .navbar.navbar-default.navbar-static-top(role='navigation')
+        include inc/menubar
+    div.container
+
+        h5= title
+            form#noticeForm.form-horizontal(role="form" method='post' action='/notice/insert')
+                .form-group
+                    label.col-sm-2.control-label(for="inputVersion") 版本
+                    .col-sm-10
+                        input#inputVersion.form-control(type="text" placeholder="版本" value='' name='version')
+                .form-group
+                    label.col-sm-2.control-label(for="inputTitle") 公告title
+                    .col-sm-10
+                        input#inputTitle.form-control(type="text" placeholder="公告title" value='' name='title')
+                .form-group
+                    label.col-sm-2.control-label(for="inputContent") 公告内容
+                    .col-sm-10
+                        input#inputContent.form-control(type="text" placeholder="公告内容" value='' name='content')
+                .form-group
+                    label.col-sm-2.control-label(for="submit")
+                    .col-sm-10
+                        button#btnInsert.btn.btn-default(type="button") 提交
+
+        h5 通告
+            - for(var i = 0; i < results.length; i++)
+                form#noticeForm.form-horizontal(role="form" method='post' action='/notice/update')
+                    .form-group
+                        input#inputVersion.form-control(type="hidden" placeholder="id" value='#{results[i].dataValues.id}' name='id')
+                    .form-group
+                        label.col-sm-2.control-label(for="inputVersion") 版本
+                        .col-sm-10
+                            input#inputVersion.form-control(type="text" placeholder="版本" value='#{results[i].dataValues.version}' name='version')
+                    .form-group
+                        label.col-sm-2.control-label(for="inputAnTitle") 公告title
+                        .col-sm-10
+                            input#inputAnTitle.form-control(type="text" placeholder="公告title" value='#{results[i].dataValues.title}' name='title')
+                    .form-group
+                        label.col-sm-2.control-label(for="inputAnTitle") 公告内容
+                        .col-sm-10
+                            input#inputAnTitle.form-control(type="text" placeholder="公告内容" value='#{results[i].dataValues.content}' name='content')
+                    .form-group
+                        label.col-sm-2.control-label(for="submit")
+                        .col-sm-10
+                            button.btn.btn-default(type='submit') 提交
+
+
+    include inc/footer

@@ -1,0 +1,25 @@
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        block titile
+        ul
+            li
+                a(href='/') 首页
+            li
+                a(href='/users') 角色查询（ID和昵称）和修改
+            li
+                a(href='/register') 注册账号统计
+            li
+                a(href='/login') 用户登录统计
+            li
+                a(href='/alive') 留存率
+            li
+                a(href='/payment') 充值人数统计
+            li
+                a(href='/online') 在线统计
+            li
+                a(href='/onlineDuration') 在线时长统计
+        block content

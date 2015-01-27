@@ -1,0 +1,87 @@
+doctype html
+html
+    include inc/header
+    link(rel='stylesheet', href='/javascripts/My97DatePicker/skin/WdatePicker.css')
+    script(src='/javascripts/web/user-input.js')
+    script(type='text/javascript').
+        $('document').ready(function() {
+
+            $('body').on('click','input.removeGoods',function(){
+                var goodsContainer = $(this).closest('.goodsContainer');
+                if(goodsContainer.children().length > 1){
+                    $(this).closest('.singlegoods').remove();
+                }
+            });
+
+            $('.addNewGood').click(function(e) {
+                var goodsContainer = $(this).closest('.addNewGoodContainer').next(".goodsContainer");
+                var tpl = $('<div class="singlegoods">'+goodsContainer.children(":eq(0)").html()+'</div>');
+                goodsContainer.append(tpl);
+            });
+        });
+body
+    .navbar.navbar-default.navbar-static-top(role='navigation')
+        include inc/menubar
+    div.container
+        h2 送礼物
+
+        h5
+            - console.log(">>>>>>>>>>>>");
+            - for(var i = 0; i < results.length; i++)
+                form#updateGiftForm.form-horizontal(role="form" method='post' action='/gift/changeGift')
+                    .form-group
+                            input#inputVersion.form-control(type="hidden" placeholder="id" value='#{results[i].id}' name='id')
+                    .form-group
+                        label.col-sm-2.control-label(for="channelId") channelId
+                        .col-sm-5
+                            input#inputchannelId.form-control(type="text" placeholder="channelId" value='#{results[i].channelId}' name='channelId')
+                    .form-group
+                        label.col-sm-2.control-label(for="giftname") 礼物名称
+                        .col-sm-5
+                            input#inputgiftname.form-control(type="text" placeholder="礼物名称" value='#{results[i].giftname}' name='giftname')
+                    .form-group
+                        label.col-sm-2.control-label(for="money") 金币
+                        .col-sm-5
+                            input#inputmoney.form-control(type="text" placeholder="金币" value='#{results[i].money}' name='money')
+                    .form-group
+                        label.col-sm-2.control-label(for="diamond") 钻石
+                        .col-sm-5
+                            input#inputdiamond.form-control(type="text" placeholder="钻石" value='#{results[i].diamond}' name='diamond')
+                    .form-group.addNewGoodContainer
+                        label.col-sm-2.control-label 添加物品
+                        .col-sm-5
+                            input.addNewGood.btn.btn-default(type="button" value='添加')
+                    .goodsContainer
+                        - for(var j = 0; j < results[i]['goodsItem'].length; j++)
+                            .singlegoods
+                                .form-group
+                                    label.col-sm-2.control-label(for="diamond") 物品
+                                    .col-sm-5
+                                        select#inputdiamond.form-control(type="text" name='goodsId')
+                                            option(type="text" value="#{results[i]['goodsItem'][j].id}" selected='selected') #{results[i]['goodsItem'][j].name}
+                                            - for(var k = 0; k < goods.length; k++)
+                                                option(type="text" value='#{goods[k].id}' ) #{goods[k].name}
+
+                                .form-group
+                                    label.col-sm-2.control-label(for="diamond") 数量
+                                    .col-sm-5
+                                        input#inputdiamond.form-control(type="text" placeholder="钻石数量" value="#{results[i]['goodsItem'][j]['num']}" name='number')
+                                .form-group
+                                    label.col-sm-2.control-label(for="removeGoods")
+                                    .col-sm-5
+                                        input.removeGoods.btn.btn-default(type="button" value='移除')
+                    .form-group
+                        label.col-sm-2.control-label(for="submit")
+                        .col-sm-10
+                            button.btn.btn-default(type='submit') 提交
+                            //button#btnUpdateGift.btn.btn-default(type="button") 提交
+                form#sendGiftForm.form-horizontal(role="form" method='post' action='/gift/sendGift')
+                    .form-group
+                        input#inputVersion.form-control(type="hidden" placeholder="id" value='#{results[i].dataValues.id}' name='id')
+                    .form-group
+                        label.col-sm-2.control-label(for="channelId") 推送
+                        .col-sm-5
+                            button.btn.btn-default(type='submit') 推送
+                h2          ----------------------------------------------------
+
+    include inc/footer

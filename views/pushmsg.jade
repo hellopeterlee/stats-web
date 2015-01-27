@@ -1,0 +1,182 @@
+doctype html
+html
+    include inc/header
+    script(src='/javascripts/My97DatePicker/WdatePicker.js')
+    link(rel='stylesheet', href='/javascripts/My97DatePicker/skin/WdatePicker.css')
+    script(src='/javascripts/FusionCharts/FusionCharts.js')
+    body
+        .navbar.navbar-default.navbar-static-top(role='navigation')
+        include inc/menubar
+
+        div.container
+            h2= title
+            table
+                form.form-inline(role='form' action='/pushmsg')
+                    .form-group
+                        label.sr-only 选择日期
+                        p.form-control-static 选择日期:&nbsp&nbsp&nbsp&nbsp
+                            input.Wdate(type="text" id="d243" name='startDate' onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})")
+                        label.sr-only 选择日期
+                        p.form-control-static 截止日期:&nbsp&nbsp&nbsp&nbsp
+                            input.Wdate(type="text" id="d243" name='endDate' onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})")
+                            &nbsp&nbsp&nbsp&nbsp
+                            button.btn.btn-default(type='submit') 提交
+            h5
+                - for(var i = 0; i < results.length; i++)
+                    - var date = results[i].startTime;
+                    - var years = date.getFullYear().toString();
+                    - var months = (date.getMonth() + 1) < 10 ? ('0' + (1 + date.getMonth())) : ('' + ( 1 + date.getMonth()));
+                    - var days = date.getDate() < 10 ? ('0' + date.getDate()) : ('' + date.getDate());
+                    - var hour = date.getHours() < 10 ? ('0' + date.getHours()) : ('' + date.getHours());
+                    - var min = date.getMinutes() < 10 ? ('0' + date.getMinutes()) : ('' + date.getMinutes());
+                    - var sec = date.getSeconds() < 10 ? ('0' + date.getSeconds()) : ('' + date.getSeconds());
+                    - var theDate = years + "-" + months + "-" + days + " "+ hour + ":" +min + ":" +sec;
+                    - var _dayOfWeek = results[i].pushDayOfWeek ? results[i].pushDayOfWeek.split(',') : [];
+                    - var dayOfWeek = [0,0,0,0,0,0,0];
+                    - for( var j = 0 ; j < _dayOfWeek.length; j++ )
+                        - dayOfWeek[_dayOfWeek[j]-1] = 1;
+
+                    form#updatePushMsgForm.form-horizontal(role="form" method='post' action='/pushmsg/update')
+                        .form-group
+                            input#inputVersion.form-control(type="hidden" placeholder="id" value='#{results[i].id}' name='id')
+                        .form-group
+                            label.col-sm-2.control-label(for="inputnickname") 用户昵称
+                            .col-sm-5
+                                input#inputnickname.form-control(type="text" placeholder="用户昵称" value='#{results[i].nickname}' name='nickname')
+                        .form-group
+                            label.col-sm-2.control-label(for="inputIcon") 用户图像
+                            .col-sm-5
+                                input#inputIcon.form-control(type="text" placeholder="用户图像" value='#{results[i].icon}' name='icon')
+                        .form-group
+                            label.col-sm-2.control-label(for="inputLevel") 用户等级
+                            .col-sm-5
+                                input#inputLevel.form-control(type="text" placeholder="用户等级" value='#{results[i].level}' name='level')
+                        .form-group
+                            label.col-sm-2.control-label(for="inputMsg") 消息内容
+                            .col-sm-5
+                                input#inputMsg.form-control(type="text" placeholder="消息内容" value='#{results[i].msg}' name='msg')
+                        .form-group
+                            label.col-sm-2.control-label(for="startTime") 时间
+                            .col-sm-5
+                                input.Wdate(style="width:300px" type="text" id="d243" name='startTime' value='#{theDate}' onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})")
+                                //input#inputAnTime.form-control(type="text" placeholder="anTime" value='#{results[i].anTime}' name='anTime')
+                        .form-group
+                            label.col-sm-2.control-label(for="pushRate") 发送频率(单位秒)
+                            .col-sm-5
+                                input#inputIsAn.form-control(type="text" placeholder="发送频率(单位秒)" value='#{results[i].pushRate}' name='pushRate')
+                        .form-group
+                            label.col-sm-2.control-label(for="pushDayOfWeek")
+                            .col-sm-1
+                                - if(dayOfWeek[0] == 1)
+                                    input(type="checkbox" value="1" name='dayOfWeek' checked)
+                                - else
+                                    input(type="checkbox" value="1" name='dayOfWeek')
+                                | 周1
+                            .col-sm-1
+                                - if(dayOfWeek[1] == 1)
+                                    input(type="checkbox" value="2" name='dayOfWeek' checked)
+                                - else
+                                    input(type="checkbox" value="2" name='dayOfWeek')
+                                | 周2
+                            .col-sm-1
+                                - if(dayOfWeek[2] == 1)
+                                    input(type="checkbox" value="3" name='dayOfWeek' checked)
+                                - else
+                                    input(type="checkbox" value="3" name='dayOfWeek')
+                                | 周3
+                            .col-sm-1
+                                - if(dayOfWeek[3]== 1)
+                                    input(type="checkbox" value="4" name='dayOfWeek' checked)
+                                - else
+                                    input(type="checkbox" value="4" name='dayOfWeek')
+                                | 周4
+                            .col-sm-1
+                                - if(dayOfWeek[4]== 1)
+                                    input(type="checkbox" value="5" name='dayOfWeek' checked)
+                                - else
+                                    input(type="checkbox" value="5" name='dayOfWeek')
+                                | 周5
+                            .col-sm-1
+                                - if(dayOfWeek[5]== 1)
+                                    input(type="checkbox" value="6" name='dayOfWeek' checked)
+                                - else
+                                    input(type="checkbox" value="6" name='dayOfWeek')
+                                | 周6
+                            .col-sm-1
+                                - if(dayOfWeek[6]== 1)
+                                    input(type="checkbox" value="7" name='dayOfWeek' checked)
+                                - else
+                                    input(type="checkbox" value="7" name='dayOfWeek')
+                                | 周7
+                        .form-group
+                            label.col-sm-2.control-label(for="isAn") 是否发送
+                            .col-sm-5
+                                input#inputIsAn.form-control(type="text" placeholder="pushFlag" value='#{results[i].pushFlag}' name='pushFlag')
+                        .form-group
+                            label.col-sm-2.control-label(for="submit")
+                            .col-sm-10
+                                button.btn.btn-default(type='submit') 提交
+
+            br
+            br
+            h1 插入消息
+
+            form#insertPushMsgForm.form-horizontal(role="form" method='post' action='/pushmsg/insert')
+                .form-group
+                    label.col-sm-2.control-label(for="inputnickname") 用户昵称
+                    .col-sm-5
+                        input#inputnickname.form-control(type="text" placeholder="用户昵称" value='' name='nickname')
+                .form-group
+                    label.col-sm-2.control-label(for="inputAnContent") 用户图像
+                    .col-sm-5
+                        input#inputAnContent.form-control(type="text" placeholder="用户图像" value='1' name='icon')
+                .form-group
+                    label.col-sm-2.control-label(for="inputLevel") 用户等级
+                    .col-sm-5
+                        input#inputLevel.form-control(type="text" placeholder="用户等级" value='1' name='level')
+                .form-group
+                    label.col-sm-2.control-label(for="anContent") 消息内容
+                    .col-sm-5
+                        input#inputAnContent.form-control(type="text" placeholder="消息内容" value='' name='msg')
+                .form-group
+                    label.col-sm-2.control-label(for="anTime") 时间
+                    .col-sm-5
+                        input.Wdate(style="width:300px" type="text" id="d243" name='startTime' value='' onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'})")
+                        //input#inputAnTime.form-control(type="text" placeholder="anTime" value='#{results[i].anTime}' name='anTime')
+                .form-group
+                    label.col-sm-2.control-label(for="pushRate") 发送频率(单位秒)
+                    .col-sm-5
+                        input#inputIsAn.form-control(type="text" placeholder="发送频率" value='' name='pushRate')
+                .form-group
+                    label.col-sm-2.control-label(for="pushDayOfWeek")
+                    .col-sm-1
+                        input(type="checkbox" value="1" name='dayOfWeek' checked)
+                        | 周1
+                    .col-sm-1
+                        input(type="checkbox" value="2" name='dayOfWeek' checked)
+                        | 周2
+                    .col-sm-1
+                        input(type="checkbox" value="3" name='dayOfWeek' checked)
+                        | 周3
+                    .col-sm-1
+                        input(type="checkbox" value="4" name='dayOfWeek' checked)
+                        | 周4
+                    .col-sm-1
+                        input(type="checkbox" value="5" name='dayOfWeek' checked)
+                        | 周5
+                    .col-sm-1
+                        input(type="checkbox" value="6" name='dayOfWeek' checked)
+                        | 周6
+                    .col-sm-1
+                        input(type="checkbox" value="7" name='dayOfWeek' checked)
+                        | 周日
+                .form-group
+                    label.col-sm-2.control-label(for="isAn") 是否发送
+                    .col-sm-5
+                        input#inputIsAn.form-control(type="text" placeholder="是否发送" value='' name='pushFlag')
+                .form-group
+                    label.col-sm-2.control-label(for="submit")
+                    .col-sm-10
+                        button.btn.btn-default(type='submit') 插入
+                        //button#btnUpdateAnnouncement.btn.btn-default(type="button") 提交
+    include inc/footer

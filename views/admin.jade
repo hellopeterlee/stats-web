@@ -1,0 +1,56 @@
+doctype html
+html
+    include inc/header
+    script(src='/javascripts/My97DatePicker/WdatePicker.js')
+    link(rel='stylesheet', href='/javascripts/My97DatePicker/skin/WdatePicker.css')
+    script(src='/javascripts/FusionCharts/FusionCharts.js')
+    script(src='/javascripts/web/register.js')
+
+    body
+    .navbar.navbar-default.navbar-static-top(role='navigation')
+        include inc/menubar
+    div.container
+        h1= title
+        table.table.table-hover
+            tr
+                td
+                td
+                td 用户名
+                td 密码
+                td
+                td
+
+            - for(var i = 0; i < results.length; i++)
+                    tr
+                        form#editForm.form-horizontal(role='form' method="post" action="admin/updateAdmin")
+                            td
+                                input#inputUsername.form-control(type="hidden" placeholder="id" value='#{results[i].id}' name='id')
+                            td
+                                input#inputCopyPassword.form-control(type="hidden" placeholder="备份的密码" value='#{results[i].copyPassword}' name='copyPassword')
+                            td
+                                input#inputUsername.form-control(type="text" placeholder="用户名" value='#{results[i].username}' name='username')
+                            td
+                                input#inputPassword.form-control(type="text" placeholder="密码" value='#{results[i].password}' name='password')
+                            td
+                                button#btnInsert.btn.btn-default(type="submit") 提交
+                        form#editForm1.form-horizontal(role='form' method="post" action="admin/deleteAdmin")
+                            td
+                                input#inputUsername2.form-control(type="hidden" placeholder="id" value='#{results[i].id}' name='id')
+                                button#btnInsert2.btn.btn-default(type="submit") 删除
+
+
+        form.form-horizontal(role='form' method="post" action="adminUser/addAdmin")
+            .form-group
+                label.col-sm-1.control-label(for="inputUsername") 用户名
+                .col-sm-3
+                    input#inputUsername.form-control(type="text" placeholder="用户名" value='' name='username')
+            .form-group
+                label.col-sm-1.control-label(for="inputPassword") 密码
+                .col-sm-3
+                    input#inputPassword.form-control(type="text" placeholder="密码" value='' name='password')
+            .form-group
+                label.col-sm-1.control-label(for="submit")
+                .col-sm-3
+                    button#btnInsert.btn.btn-default(type="submit") 添加
+    include inc/footer
+

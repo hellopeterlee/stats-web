@@ -1,0 +1,44 @@
+doctype html
+html
+    include inc/header
+
+    script(src='/javascripts/My97DatePicker/WdatePicker.js')
+    link(rel='stylesheet', href='/javascripts/My97DatePicker/skin/WdatePicker.css')
+    script(src='/javascripts/bootstrap-paginator.min.js')
+    script(src='/javascripts/commons.js')
+
+    body
+    .navbar.navbar-default.navbar-static-top(role='navigation')
+        include inc/menubar
+    div.container
+        h1= title
+        br
+
+        table.table.table-hover
+            tr
+                td sessionId
+                td 行为
+            - for(var i = 0; i < result.length; i++)
+                tr
+                    td= result[i]['sessionId']
+                    td
+                        ul.list-group
+                        - for(var j = 0; j < result[i]['behavioursObj'].length; j++)
+                            li.list-group-item= "[" + result[i]['behavioursObj'][j]['timeAt'] + "] : ["+ result[i]['behavioursObj'][j]['protocol'] +"] : " + result[i]['behavioursObj'][j]['protocolHint']
+
+        div#mypage(pagecount=page.pageCount,pagenum=page.pageNum,pagesize=page.size,pagelimit=page.limit,numberofpages=page.numberOf)
+
+    include inc/footer
+
+    script(type='text/javascript').
+        $(function(){
+            var page=$('#mypage');
+            var options = {
+                currentPage:page.attr('pagenum'),
+                totalPages:page.attr('pagecount'),
+                pageUrl: function(type, page, current){
+                    return "/clientbehaviours?"+composeUrlParams()+"&p="+page;
+                }
+            }
+            $('#mypage').bootstrapPaginator(options);
+        });

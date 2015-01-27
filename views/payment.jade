@@ -1,0 +1,32 @@
+doctype html
+html
+    include inc/header
+    body
+    .navbar.navbar-default.navbar-static-top(role='navigation')
+        include inc/menubar
+    div.container
+        h1= title
+        h3 总充值人数统计
+        div= results[0][0].count
+
+        h3 时间段充值统计
+        table.table.table-hover
+            tr
+                td 时间
+                td 充值人数
+            - for(var i = 1; i <= 24; i ++)
+                tr
+                    td= i-1
+                    td= results[i]
+
+
+        h3 充值过的账号
+        table.table.table-hover
+            tr
+                td 用户id
+            - for(var i in results[25])
+                tr
+                    td= results[25][i].userId
+    include inc/footer
+
+

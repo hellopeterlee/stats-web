@@ -1,0 +1,86 @@
+doctype html
+html
+    include inc/header
+
+    script(src='/javascripts/web/user-input.js')
+
+    body
+    .navbar.navbar-default.navbar-static-top(role='navigation')
+        include inc/menubar
+
+    div.container
+        form#mainForm(method='post' action='/users/user-search')
+            br
+            .form-group
+                label.sr-only 选择服务器:
+                p.form-control-static 选择服务器:
+                    select#inputServer.form-control(type="text",name='serverId')
+                        - if(serverId)
+                            option(type="text",value="#{serverId}",name='serverName') #{comPort[serverId].name}
+                        - else
+                            - for(var j = 0; j < comPort.length; j++)
+                                option(type="text",value="#{j}",name='serverName') #{comPort[j].name}
+            .form-group
+                label.sr-only 选择渠道:
+                p.form-control-static 选择渠道:
+                    select#inputqudao.form-control(type="text",name='channelId')
+                        - if(channelId)
+                            option(type="text",value="#{channelId}",name='serverName') #{channelId}
+                        - else
+                            - for(var k in product)
+                                option(type="text",value="#{k}",name='channel') #{product[k]['name']}
+            .input-group
+                .input-group-btn
+                    button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
+                        span#keyspan 昵称
+                        span.caret
+                    ul#keymenu.dropdown-menu(role='menu')
+                        li
+                            a(href='#' val='nickname') 昵称
+                        li
+                            a(href='#' val='username') 账号名
+                // /btn-group
+                input.form-control(type='text',name='inputval')
+                span.input-group-btn
+                    input#keyname(type='hidden' value='nickname' name='keyname')
+                    button#btnSearch.btn.btn-default(type='button') 查询
+
+        - console.log(role);
+
+        - if(role)
+            - console.log(role);
+            br
+            form#editForm.form-horizontal(role="form" method='post' action='/users/role-save')
+
+                .form-group
+                    .col-sm-10
+                        input#inputServerId.form-control(type="hidden" placeholder="ServerId" value="#{serverId}" name='serverId')
+                .form-group
+                    label.col-sm-2.control-label(for="inputNickname") 昵称
+                    .col-sm-10
+                        input#inputNickname.form-control(type="text" placeholder="昵称" value='#{role.nickname}' name='nickname')
+                .form-group
+                    label.col-sm-2.control-label(for="inputRanking") 等级
+                    .col-sm-10
+                        input#inputRanking.form-control(type="text" placeholder="等级" value='#{role.level}' name='level')
+                .form-group
+                    label.col-sm-2.control-label(for="inputMoney") 金币
+                    .col-sm-10
+                        input#inputMoney.form-control(type="text" placeholder="金币" value='#{role.money}' name='money')
+                .form-group
+                    label.col-sm-2.control-label(for="inputDiamond") 钻石
+                    .col-sm-10
+                        input#inputDiamond.form-control(type="text" placeholder="钻石" value='#{role.diamond}' name='diamond')
+                .form-group
+                    label.col-sm-2.control-label(for="inputDiamond") 最高通关
+                    .col-sm-10
+                        =maxGate
+
+            .form-group
+                    label.col-sm-2.control-label(for="submit")
+                    .col-sm-10
+                        button#btnUpdate.btn.btn-default(type="button") 提交
+        - else
+            p 无此玩家
+
+    include inc/footer

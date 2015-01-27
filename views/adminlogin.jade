@@ -1,0 +1,22 @@
+doctype html
+html
+    include inc/header
+    body
+    .navbar.navbar-default.navbar-static-top(role='navigation')
+        label 登陆
+    div.container
+
+        form.form-horizontal(role='form' method="post" action="adminUser/postlogin")
+            .form-group
+                label.col-sm-2.control-label(for="inputUsername") 用户名
+                .col-sm-3
+                    input#inputUsername.form-control(type="text" placeholder="用户名" value='' name='username')
+            .form-group
+                label.col-sm-2.control-label(for="inputPassword") 密码
+                .col-sm-3
+                    input#inputPassword.form-control(type="text" placeholder="密码" value='' name='password')
+
+            .form-group
+                label.col-sm-2.control-label(for="submit")
+                .col-sm-3
+                    button#btnInsert.btn.btn-default(type="submit") 提交

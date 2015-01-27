@@ -1,0 +1,28 @@
+doctype html
+html
+    include inc/header
+
+    body
+    .navbar.navbar-default.navbar-static-top(role='navigation')
+        include inc/menubar
+    div.container
+        h1= title
+        table.table.table-hover
+            tr
+                td 时间
+                td 注册人数
+                td ip数
+                td 登录次数
+                td 最大在线人数
+                td 平均在线时长
+            - for (var i in stats)
+                - var stat = stats[i]
+                tr
+                    td= stat.data_at
+                    td= stat.reg_count
+                    td= stat.ip_count
+                    td= stat.login_count
+                    td= stat.max_online_count
+                    td= stat.avg_online_duration
+
+    include inc/footer

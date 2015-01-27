@@ -1,0 +1,69 @@
+doctype html
+html
+    include inc/header
+    script(src='/javascripts/My97DatePicker/WdatePicker.js')
+    link(rel='stylesheet', href='/javascripts/My97DatePicker/skin/WdatePicker.css')
+    script(src='/javascripts/FusionCharts/FusionCharts.js')
+    script(src='/javascripts/web/register.js')
+
+    body
+    .navbar.navbar-default.navbar-static-top(role='navigation')
+        include inc/menubar
+    div.container
+        h1= title
+
+        h3 服务器状态：
+        - var statusProtocol = {'1':'良好', '2':'火爆', '-1':'爆满','-2':'未响应'}
+        table.table.table-hover
+            tr
+                td
+                td  服务器
+                td  状态
+                - for(var i = 0; i < statusArr.length; i++)
+                    tr
+                        td
+                        td= comPort[i].name
+                        td= statusProtocol[statusArr[i]]
+
+
+        h3 运维人员：
+        table.table.table-hover
+            tr
+                td
+                td 用户名
+                td 邮箱
+                td
+                td
+
+            - for(var i = 0; i < results.length; i++)
+                    tr
+                        form#editForm.form-horizontal(role='form' method="post" action="email/updateEmail")
+                            td
+                                input#inputIp.form-control(type="hidden" placeholder="id" value='#{results[i].id}' name='id')
+                            td
+                                input#inputUsername.form-control(type="text" placeholder="用户名" value='#{results[i].username}' name='username')
+                            td
+                                input#inputEmail.form-control(type="text" placeholder="邮箱" value='#{results[i].email}' name='email')
+                            td
+                                button#btnInsert.btn.btn-default(type="submit") 提交
+                        form#editForm1.form-horizontal(role='form' method="post" action="email/deleteEmail")
+                            td
+                                input#inputUsername2.form-control(type="hidden" placeholder="id" value='#{results[i].id}' name='id')
+                                button#btnInsert2.btn.btn-default(type="submit") 删除
+
+
+        form.form-horizontal(role='form' method="post" action="email/addEmail")
+            .form-group
+                label.col-sm-1.control-label(for="inputUsername") 用户名
+                .col-sm-3
+                    input#inputUsername.form-control(type="text" placeholder="用户名" value='' name='username')
+            .form-group
+                label.col-sm-1.control-label(for="inputPassword") 邮箱
+                .col-sm-3
+                    input#inputPassword.form-control(type="text" placeholder="邮箱" value='' name='email')
+            .form-group
+                label.col-sm-1.control-label(for="submit")
+                .col-sm-3
+                    button#btnInsert.btn.btn-default(type="submit") 添加
+    include inc/footer
+

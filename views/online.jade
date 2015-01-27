@@ -1,0 +1,32 @@
+doctype html
+html
+    include inc/header
+    script(src='/javascripts/My97DatePicker/WdatePicker.js')
+    link(rel='stylesheet', href='/javascripts/My97DatePicker/skin/WdatePicker.css')
+    script(src='/javascripts/FusionCharts/FusionCharts.js')
+    script(src='/javascripts/web/register.js')
+    script(type='text/javascript').
+        var chartData = !{results['chartData']};
+
+    body
+    .navbar.navbar-default.navbar-static-top(role='navigation')
+        include inc/menubar
+    div.container
+        h1= title
+        br
+        form.form-inline(role='form' action='/online')
+            .form-group
+                label.sr-only 选择服务器:
+                p.form-control-static 选择服务器:&nbsp&nbsp&nbsp&nbsp
+            .form-group
+                select#inputdiamond.form-control(type="text",name='serverId')
+                    option(type="text",value='serverId' name='serverId',selected='selected') 全部
+                    - for(var j = 0; j < comPort.length; j++)
+                        option(type="text",value="#{j+1}",name='goodsname') #{comPort[j].name}
+            button.btn.btn-default(type='submit') 提交
+        br
+
+        h3 在线人数
+        = results
+    include inc/footer
+

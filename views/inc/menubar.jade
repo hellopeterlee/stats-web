@@ -1,0 +1,11 @@
+.container
+    .navbar-collapse.collapse
+        ul.nav.navbar-nav
+            - var obj = { '/pushmsg':'随机消息','/notice':'公告发布','/announcement':'通告发布','/gift':'送礼物','/register':'注册统计','/loginLogs':'登陆统计','/alive':'留存统计','/online':'在线统计','/onlineDuration':'在线时长','/admin':'管理员','/email':'运维','/users':'玩家信息','/clientbehaviours':'行为分析','/users/levelcount':'玩家等级','/users/gatecount':'玩家过关' }
+                - each val, key in obj
+                    - if (id == key)
+                        li.active
+                            a(href='#{key}') #{val}
+                    - else
+                        li
+                            a(href='#{key}') #{val}
