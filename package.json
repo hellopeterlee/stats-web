@@ -19,7 +19,7 @@
     "lithe": "^0.3.4",
     "lodash": "^2.4.1",
     "moment": ">=2.4.0",
-    "morgan": "~1.3.0",
+    "morgan": "~1.9.1",
     "multer": "^0.1.6",
     "request": "*",
     "serve-favicon": "~2.1.3",
